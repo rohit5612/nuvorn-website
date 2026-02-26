@@ -4,7 +4,15 @@ import logo from '../assets/nnexus.png'
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const location = useLocation()
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
+    handleScroll() // check on mount
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -17,7 +25,7 @@ const Navigation = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm ">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/95 backdrop-blur-md shadow-lg shadow-black/20' : 'bg-transparent backdrop-blur-sm'}`}>
       <div className="container-max">
         <div className="flex items-center justify-between py-6 min-h-[70px]">
           {/* Logo */}
@@ -37,7 +45,7 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-d font-medium transition-colors ${
                   isActive(item.path) ? 'text-amber-500' : 'text-white/80 hover:text-amber-500'
                 }`}
               >
@@ -48,10 +56,10 @@ const Navigation = () => {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/contact" className="px-4 py-2 rounded-lg border border-white/20 text-sm font-semibold text-white/90 hover:bg-white/5 transition-colors">
+            <Link to="/contact" className="px-4 py-2 rounded-lg border border-white/40 text-sm font-semibold text-white/90 hover:bg-amber-600 transition-colors">
               Contact
             </Link>
-            <Link to="/pricing" className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold shadow-md shadow-primary/30 hover:bg-primary/90 transition-colors">
+            <Link to="/pricing" className="px-4 py-2 rounded-lg bg-primary text-white border border-blue-400/60 text-sm font-semibold shadow-md shadow-primary/30 hover:bg-blue-600 transition-colors">
               Get started
             </Link>
           </div>

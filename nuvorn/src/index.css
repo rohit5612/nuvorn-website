@@ -103,114 +103,156 @@
     opacity: 0.95;
   }
 
-  /* Hero: dark background for hero section */
+  /* ─── HERO / NEXT SECTION PARALLAX COVER ─────────────────────────── */
+  .hero-section {
+    position: relative;
+    z-index: 0;
+  }
+  .action-section-cover {
+    position: relative;
+    z-index: 10;
+    margin-top: -100vh;
+    background: linear-gradient(135deg, #0b1220 0%, #0f172a 50%, #080b0f 100%);
+  }
+  .hero-pin {
+    transform-origin: 50% 100%;
+  }
+
+  /* ─── ACTION SECTION (See Nuvorn Axis in action) LAYOUT ───────────── */
+  /* Tighter spacing: heading and MacBook use a single flow with less gap;
+   * device is sized separately so the frame can be larger while image stays proportional. */
+  .action-section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .action-section-heading {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .action-section-heading {
+      margin-bottom: 0.75rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .action-section-heading {
+      margin-bottom: 1rem;
+    }
+  }
+  /* Device block: pull closer to heading via negative margin, then add back padding so content doesn’t touch */
+  .action-section-device {
+    margin-top: -0.25rem;
+    max-width: min(92vw, 420px);
+    padding: 0;
+  }
+  @media (min-width: 640px) {
+    .action-section-device {
+      max-width: min(85vw, 520px);
+      margin-top: -0.5rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .action-section-device {
+      max-width: min(78vw, 620px);
+      margin-top: -0.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .action-section-device {
+      max-width: min(72vw, 720px);
+    }
+  }
+  /* MacBook in this section: same aspect ratio, slightly tighter so it sits under the text */
+  .device-macbook-action {
+    max-width: 100%;
+  }
+
+  /* ─── HERO SECTION BACKGROUND ─────────────────────────────────── */
   .hero-bg {
     position: relative;
-    background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+    background: #0a0a0a;
   }
 
-  /* Hero title block – mobile: in flow; sm+: absolute with top */
+  /* ─── HERO BACKGROUND VIDEO ─────────────────────────────────────── */
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+  }
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.932) 0%,
+      rgba(0, 0, 0, 0.644)  45%,
+      rgba(0,0,0,0.75) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* ─── HERO TITLE BLOCK ───────────────────────────────────────────── */
   .hero-title-block {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    max-width: 36rem;
+    padding: 0 1rem;
+    max-width: 27.2rem;
   }
   .hero-title {
-    font-size: 1.75rem;
-    letter-spacing: -0.025em;
+    font-size: clamp(1.275rem, 6.8vw, 1.594rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
   }
   .hero-slogan {
-    font-size: 0.875rem;
-    line-height: 1.4;
+    font-size: clamp(0.68rem, 2.975vw, 0.765rem);
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
   }
-  @media (min-width: 640px) {
-    .hero-title-block {
-      top: calc(var(--navbar-height-sm, 90px) + 1.25rem);
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-    .hero-title {
-      font-size: 2.25rem;
-    }
-    .hero-slogan {
-      font-size: 1rem;
-    }
-  }
-  @media (min-width: 768px) {
-    .hero-title-block {
-      top: calc(var(--navbar-height-md, 80px) + 1.5rem);
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-    .hero-title {
-      font-size: 3rem;
-    }
-    .hero-slogan {
-      font-size: 1.125rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-title-block {
-      top: calc(var(--navbar-height-md, 80px) + 2rem);
-      max-width: 48rem;
-    }
-    .hero-title {
-      font-size: 3.75rem;
-    }
-    .hero-slogan {
-      font-size: 1.25rem;
-    }
-  }
-  @media (min-width: 1280px) {
-    .hero-title {
-      font-size: 4.5rem;
-    }
-    .hero-slogan {
-      font-size: 1.5rem;
-    }
+  .hero-slogan-spacing {
+    margin-top: 0.425rem;
   }
 
-  /* Hero MacBook wrapper – mobile: minimal padding; sm+: consistent spacing */
+  /* ─── SHINY TITLE ANIMATION ──────────────────────────────────────── */
+  .hero-title-shiny {
+    background: linear-gradient(
+      90deg,
+      #f59e0b 0%,
+      #0891b2 22%,
+      #2563eb 50%,
+      #0891b2 78%,
+      #f59e0b 100%
+    );
+    background-size: 200% 100%;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: hero-title-shine 4s linear infinite;
+  }
+  @keyframes hero-title-shine {
+    to { background-position: 200% center; }
+  }
+
+  /* ─── HERO MACBOOK WRAPPER ───────────────────────────────────────── */
   .hero-macbook-wrap {
-    padding: 0.25rem;
+    padding: 0;
   }
-  @media (min-width: 640px) {
-    .hero-macbook-wrap {
-      padding: 1rem;
-    }
-  }
-  @media (min-width: 768px) {
-    .hero-macbook-wrap {
-      padding: 1.5rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-macbook-wrap {
-      padding: 2rem;
-    }
-  }
-
-  /* Hero MacBook inner – responsive max-width so spacing is maintained */
   .hero-macbook-inner {
-    max-width: min(92vw, 400px);
-  }
-  @media (min-width: 640px) {
-    .hero-macbook-inner {
-      max-width: min(90vw, 560px);
-    }
-  }
-  @media (min-width: 768px) {
-    .hero-macbook-inner {
-      max-width: min(90vw, 720px);
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-macbook-inner {
-      max-width: min(88vw, 900px);
-    }
+    max-width: min(92vw, 306px);
   }
 
-  /* Hero slide text – floating faded text left/right of MacBook, no layout shift */
+  /* ─── HERO SLIDE TEXT ────────────────────────────────────────────── */
   .hero-slide-text {
     display: none;
     position: absolute;
@@ -218,72 +260,44 @@
     transform: translateY(-50%);
     z-index: 5;
     pointer-events: none;
-    max-width: 200px;
+    max-width: 153px;
     opacity: 0.9;
   }
   .hero-slide-text-left {
-    left: 4%;
+    left: 3%;
     right: auto;
     text-align: left;
     animation: hero-slide-text-in-left 0.6s ease-out forwards;
   }
   .hero-slide-text-right {
-    right: 4%;
+    right: 3%;
     left: auto;
     text-align: right;
     animation: hero-slide-text-in-right 0.6s ease-out forwards;
   }
   .hero-slide-headline {
-    font-size: 1.125rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255,255,255,0.95);
     line-height: 1.3;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.32rem 0;
   }
   .hero-slide-desc {
-    font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.45;
+    font-size: 0.638rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
     margin: 0;
   }
   @keyframes hero-slide-text-in-left {
-    from {
-      opacity: 0;
-      transform: translateY(-50%) translateX(-12px);
-    }
-    to {
-      opacity: 0.9;
-      transform: translateY(-50%) translateX(0);
-    }
+    from { opacity: 0; transform: translateY(-50%) translateX(-12px); }
+    to   { opacity: 0.9; transform: translateY(-50%) translateX(0); }
   }
   @keyframes hero-slide-text-in-right {
-    from {
-      opacity: 0;
-      transform: translateY(-50%) translateX(12px);
-    }
-    to {
-      opacity: 0.9;
-      transform: translateY(-50%) translateX(0);
-    }
-  }
-  @media (min-width: 768px) {
-    .hero-slide-text {
-      display: block;
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-slide-text {
-      max-width: 240px;
-    }
-    .hero-slide-headline {
-      font-size: 1.25rem;
-    }
-    .hero-slide-desc {
-      font-size: 0.875rem;
-    }
+    from { opacity: 0; transform: translateY(-50%) translateX(12px); }
+    to   { opacity: 0.9; transform: translateY(-50%) translateX(0); }
   }
 
-  /* Hero carousel – horizontal swipe */
+  /* ─── HERO CAROUSEL ──────────────────────────────────────────────── */
   .hero-carousel-track {
     display: flex;
     height: 100%;
@@ -291,7 +305,6 @@
     will-change: transform;
     transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
   .hero-carousel-slide {
     flex: 0 0 100%;
     height: 100%;
@@ -300,7 +313,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .hero-carousel-img {
     height: 100%;
     width: 100%;
@@ -309,70 +321,174 @@
     pointer-events: none;
   }
 
-  /* Hero dots – inside "Scroll to explore" block, responsive size via variables */
+  /* ─── HERO DOTS ──────────────────────────────────────────────────── */
   .hero-dots {
-    --hero-dot-active: 24px;
-    --hero-dot-inactive: 6px;
-  }
-  @media (min-width: 640px) {
-    .hero-dots {
-      --hero-dot-active: 28px;
-      --hero-dot-inactive: 8px;
-      gap: 0.5rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-dots {
-      --hero-dot-active: 32px;
-      --hero-dot-inactive: 8px;
-    }
+    --hero-dot-active: 17px;
+    --hero-dot-inactive: 4px;
   }
 
-  /* MacBook device frame (image + screen overlay) */
+  /* ─── DEVICE MACBOOK FRAME ───────────────────────────────────────── */
   .device-macbook {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     aspect-ratio: 1 / 1;
   }
-
   .device-shell-img {
     width: 100%;
     height: auto;
     display: block;
     position: relative;
     z-index: 2;
-    filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 10px 27px rgba(0,0,0,0.4));
     user-select: none;
     pointer-events: none;
   }
-
   .device-screen {
     position: absolute;
     inset: 25.7% 15.1% 27.8% 15.1%;
-    border-radius: 8px;
-    padding: 1%;
+    border-radius: 5px;
+    padding: 0.5%;
     overflow: hidden;
     background: #0f172a;
     z-index: 1;
   }
 
-  @media (max-width: 639px) {
-    .device-macbook {
-      max-width: 100%;
-    }
-    .device-shell-img {
-      filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.35));
-    }
-    .device-screen {
-      border-radius: 6px;
-      padding: 0.5%;
+  /* ═══════════════════════════════════════════════════════════════════
+     BREAKPOINTS
+     360px  │ 480px  │ 640px  │ 768px  │ 1024px │ 1280px │ 1536px
+  ═══════════════════════════════════════════════════════════════════ */
+
+  /* ── 360px+ ────────────────────────────────────────────────────── */
+  @media (min-width: 360px) {
+    .hero-title  { font-size: 1.594rem; }
+    .hero-slogan { font-size: 0.744rem; }
+    .hero-macbook-inner { max-width: min(92vw, 323px); }
+  }
+
+  /* ── 480px+ ────────────────────────────────────────────────────── */
+  @media (min-width: 480px) {
+    .hero-title-block { padding: 0 1.063rem; max-width: 30.6rem; }
+    .hero-title       { font-size: 1.806rem; }
+    .hero-slogan      { font-size: 0.797rem; }
+    .hero-slogan-spacing { margin-top: 0.531rem; }
+    .hero-macbook-inner { max-width: min(90vw, 374px); }
+    .hero-macbook-wrap  { padding: 0.425rem 0; }
+    .hero-dots {
+      --hero-dot-active: 20px;
+      --hero-dot-inactive: 5px;
     }
   }
-  @media (min-width: 640px) and (max-width: 767px) {
-    .device-macbook {
-      max-width: 100%;
+
+  /* ── 640px+ (tablet portrait / small laptop) ───────────────────── */
+  @media (min-width: 640px) {
+    .hero-title-block {
+      padding: 0 1.275rem;
+      max-width: 32.3rem;
+      top: calc(var(--navbar-height-sm, 90px) + 1.275rem);
+    }
+    .hero-title  { font-size: 2.231rem; }
+    .hero-slogan { font-size: 0.85rem; }
+    .hero-slogan-spacing { margin-top: 0.425rem; }
+    .hero-macbook-inner { max-width: min(82vw, 493px); }
+    .device-screen { border-radius: 6px; padding: 0.75%; }
+    .device-shell-img { filter: drop-shadow(0 15px 41px rgba(0,0,0,0.4)); }
+    .hero-dots {
+      --hero-dot-active: 22px;
+      --hero-dot-inactive: 6px;
+      gap: 0.375rem;
+    }
+  }
+
+  /* ── 768px+ (tablet landscape) ─────────────────────────────────── */
+  @media (min-width: 768px) {
+    .hero-title-block {
+      padding: 0 1.7rem;
+      max-width: 37.4rem;
+      top: calc(var(--navbar-height-md, 80px) + 1.488rem);
+    }
+    .hero-title  { font-size: 2.763rem; }
+    .hero-slogan { font-size: 0.956rem; }
+    .hero-slogan-spacing { margin-top: 0.531rem; }
+    .hero-macbook-inner { max-width: min(78vw, 595px); }
+    .device-screen { border-radius: 7px; padding: 0.75%; }
+    .hero-slide-text { display: block; max-width: 162px; }
+    .hero-slide-headline { font-size: 0.903rem; }
+    .hero-slide-desc     { font-size: 0.691rem; }
+    .hero-dots {
+      --hero-dot-active: 24px;
+      --hero-dot-inactive: 6px;
+      gap: 0.5rem;
+    }
+  }
+
+  /* ── 1024px+ (laptop) ───────────────────────────────────────────── */
+  @media (min-width: 1024px) {
+    .hero-title-block {
+      padding: 0 1.7rem;
+      max-width: 44.2rem;
+      top: calc(var(--navbar-height-md, 80px) + 1.913rem);
+    }
+    .hero-title  { font-size: 3.4rem; }
+    .hero-slogan { font-size: 1.063rem; }
+    .hero-slogan-spacing { margin-top: 0.638rem; }
+    .hero-macbook-inner { max-width: min(74vw, 697px); }
+    .device-screen { border-radius: 8px; padding: 1%; }
+    .device-shell-img { filter: drop-shadow(0 20px 51px rgba(0,0,0,0.4)); }
+    .hero-slide-text     { max-width: 187px; }
+    .hero-slide-text-left  { left: 3.5%; }
+    .hero-slide-text-right { right: 3.5%; }
+    .hero-slide-headline { font-size: 0.956rem; }
+    .hero-slide-desc     { font-size: 0.691rem; }
+    .hero-dots {
+      --hero-dot-active: 26px;
+      --hero-dot-inactive: 7px;
+    }
+  }
+
+  /* ── 1280px+ (desktop) ──────────────────────────────────────────── */
+  @media (min-width: 1280px) {
+    .hero-title-block {
+      padding: 0 2.125rem;
+      max-width: 51rem;
+      top: calc(var(--navbar-height-md, 80px) + 2.338rem);
+    }
+    .hero-title  { font-size: 4.038rem; }
+    .hero-slogan { font-size: 1.169rem; }
+    .hero-slogan-spacing { margin-top: 0.744rem; }
+    .hero-macbook-inner { max-width: min(70vw, 765px); }
+    .hero-slide-text     { max-width: 204px; }
+    .hero-slide-text-left  { left: 4%; }
+    .hero-slide-text-right { right: 4%; }
+    .hero-slide-headline { font-size: 1.009rem; }
+    .hero-slide-desc     { font-size: 0.744rem; }
+    .hero-dots {
+      --hero-dot-active: 27px;
+      --hero-dot-inactive: 7px;
+    }
+  }
+
+  /* ── 1536px+ (large desktop / 2xl) ─────────────────────────────── */
+  @media (min-width: 1536px) {
+    .hero-title-block {
+      padding: 0 2.55rem;
+      max-width: 57.8rem;
+      top: calc(var(--navbar-height-md, 80px) + 2.763rem);
+    }
+    .hero-title  { font-size: 4.675rem; }
+    .hero-slogan { font-size: 1.275rem; }
+    .hero-slogan-spacing { margin-top: 0.85rem; }
+    .hero-macbook-inner { max-width: min(68vw, 833px); }
+    .hero-slide-text     { max-width: 230px; }
+    .hero-slide-text-left  { left: 4.5%; }
+    .hero-slide-text-right { right: 4.5%; }
+    .hero-slide-headline { font-size: 1.063rem; }
+    .hero-slide-desc     { font-size: 0.797rem; }
+    .device-shell-img { filter: drop-shadow(0 24px 61px rgba(0,0,0,0.45)); }
+    .hero-dots {
+      --hero-dot-active: 31px;
+      --hero-dot-inactive: 8px;
     }
   }
 }

@@ -33,6 +33,7 @@ const slideCopy = [
 const HeroSection = () => {
   const sectionRef = useRef(null)
   const pinRef = useRef(null)
+  const videoRef = useRef(null)
   const titleRef = useRef(null)
   const macbookRef = useRef(null)
   const hintRef = useRef(null)
@@ -50,8 +51,18 @@ const HeroSection = () => {
 
       const slidesAfterIntro = screens.length - 1
 
-      const isNarrow = () => typeof window !== 'undefined' && window.innerWidth < 768
-      const endScale = () => (isNarrow() ? 1.35 : 1.55)
+      const vw = () => (typeof window !== 'undefined' ? window.innerWidth : 1024)
+      const endScale = () => {
+        const w = vw()
+        if (w < 360)  return 1.15
+        if (w < 480)  return 1.22
+        if (w < 640)  return 1.28
+        if (w < 768)  return 1.35
+        if (w < 1024) return 1.45
+        if (w < 1280) return 1.55
+        return 1.6
+      }
+      const startY = () => (vw() < 480 ? 24 : 40)
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -66,7 +77,7 @@ const HeroSection = () => {
       })
 
       gsap.set(titleRef.current, { opacity: 1, y: 0 })
-      gsap.set(macbookRef.current, { scale: 0.85, y: 40 })
+      gsap.set(macbookRef.current, { scale: 0.85, y: startY() })
       gsap.set(hintRef.current, { opacity: 1 })
 
       tl.to(titleRef.current, {
@@ -120,27 +131,56 @@ const HeroSection = () => {
         duration: 0.05,
         ease: 'none'
       }, 0.95)
+
+      // Parallax: scale hero content down as we approach next section so it feels "covered"
+      gsap.set(pinRef.current, { transformOrigin: '50% 100%' })
+      gsap.to(pinRef.current, {
+        scale: 0.96,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: '60% top',
+          end: '85% top',
+          scrub: 1.5,
+          invalidateOnRefresh: true
+        }
+      })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative hero-bg h-[500vh]">
+    <section ref={sectionRef} className="hero-section relative hero-bg h-[500vh] z-0">
       <div
         ref={pinRef}
-        className="hero-pin flex min-h-screen flex-col justify-center gap-2 overflow-hidden px-3 pt-[calc(var(--navbar-height-mobile,100px)+0.5rem)] pb-3 sm:block sm:gap-0 sm:px-0 sm:pt-0 sm:pb-0"
+        className="hero-pin flex min-h-screen flex-col justify-center overflow-hidden relative px-4 pt-[calc(var(--navbar-height-mobile,100px)+0.75rem)] pb-6 gap-4 min-[480px]:gap-5 min-[480px]:px-5 min-[480px]:pt-[calc(var(--navbar-height-mobile,100px)+1rem)] min-[480px]:pb-8 sm:block sm:gap-0 sm:px-0 sm:pt-0 sm:pb-0"
       >
+        {/* Full-viewport background video – behind navbar and content */}
+        <div className="hero-video-wrap" aria-hidden>
+          <video
+            ref={videoRef}
+            src="/videos/herobg.mp4"
+            className="hero-bg-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            disablePictureInPicture
+          />
+          <div className="hero-video-overlay" />
+        </div>
+
         {/* Title and slogan – in flow on mobile, absolute on sm+ */}
         <div
           ref={titleRef}
           className="hero-title-block relative z-10 w-full text-center sm:absolute sm:left-1/2 sm:-translate-x-1/2"
         >
-          <h1 className="hero-title font-bold leading-tight text-white">
+          <h1 className="hero-title hero-title-shiny font-bold leading-tight inline-block">
             Nuvorn Axis
           </h1>
-          <p className="hero-slogan mt-1 text-white/80 sm:mt-1.5 md:mt-2">
-            ERP that adapts to your business process, not the other way around
+          <p className="hero-slogan hero-slogan-spacing text-white/80">
+            The Enterprise Resource Planning System that adapts to your business process, not the other way around
           </p>
         </div>
 
@@ -167,7 +207,7 @@ const HeroSection = () => {
         )}
 
         {/* MacBook – in flow on mobile, viewport-centered on sm+ */}
-        <div className="hero-macbook-wrap relative flex flex-shrink-0 items-center justify-center py-1 sm:absolute sm:inset-0 sm:py-0">
+        <div className="hero-macbook-wrap relative flex flex-shrink-0 items-center justify-center py-2 min-[480px]:py-3 sm:absolute sm:inset-0 sm:py-0">
           <div
             ref={macbookRef}
             className="hero-macbook-inner relative w-full origin-center"
@@ -204,9 +244,9 @@ const HeroSection = () => {
 
         <div
           ref={hintRef}
-          className="hero-hint relative z-10 flex flex-shrink-0 flex-col items-center gap-2 text-center sm:absolute sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 sm:gap-4 md:bottom-8"
+          className="hero-hint relative z-10 flex flex-shrink-0 flex-col items-center gap-2 text-center min-[480px]:gap-3 sm:absolute sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 sm:gap-4 md:bottom-8 lg:bottom-10"
         >
-          <p className="text-xs font-medium uppercase tracking-widest text-white/90 sm:text-sm">
+          <p className="hero-hint-text text-xs font-medium uppercase tracking-widest text-white/90 min-[480px]:text-[0.8125rem] sm:text-sm md:text-base">
             Scroll to explore
           </p>
           <div className="hero-dots flex justify-center gap-1.5">

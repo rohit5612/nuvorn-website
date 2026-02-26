@@ -19,23 +19,23 @@ const HomePage = () => {
     <div className="relative bg-black text-white" style={{ position: 'relative' }}>
       <HeroSection />
 
-      {/* Section 1: See Nuvorn Axis in action (video) – section-dark, compact */}
-      <section className="py-12 md:py-16 section-dark border-t border-white/10">
-        <div className="container-max">
-          <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8">
+      {/* Section 1: See Nuvorn Axis in action – overlaps hero (parallax cover) */}
+      <section className="action-section-cover relative z-10 py-12 md:py-12 section-dark border-t border-white/20">
+        <div className="container-max action-section-inner">
+          <div className="action-section-heading text-center max-w-2xl mx-auto">
             <p className="text-amber-400 font-semibold text-xs uppercase tracking-widest mb-2">
               What&apos;s next
             </p>
             <h2 className="text-2xl font-bold text-contrast sm:text-3xl md:text-4xl mb-3">
               See Nuvorn Axis in action
             </h2>
-            <p className="text-contrast-muted text-sm sm:text-base mb-4 md:mb-6">
+            <p className="text-contrast-muted text-sm sm:text-base mb-0">
               Explore modules, workflows, and how we help teams get clarity and control.
             </p>
           </div>
 
-          <div className="w-full max-w-[min(88vw,900px)] mx-auto flex justify-center">
-            <div className="device-macbook mx-auto w-full max-w-[min(88vw,900px)]">
+          <div className="action-section-device w-full mx-auto flex justify-center">
+            <div className="device-macbook device-macbook-action mx-auto w-full">
               <img
                 src="/images/wesbite/macbook.png"
                 alt="MacBook"
@@ -65,7 +65,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-6 md:mt-8">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-6 md:mt-7">
             <Link
               to="/features"
               className="rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600 transition-colors sm:px-6 sm:py-3"
